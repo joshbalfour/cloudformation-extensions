@@ -1,0 +1,142 @@
+{
+  "s3BucketName" : {
+    "Type" : "String",
+    "Description" : "S3 Bucket Name",
+    "Default" : "project.name"
+  },
+
+  "redisSize": {
+    "Type" : "String",
+    "Description" : "Redis Size",
+    "Default" : "cache.t2.micro"
+  },
+
+  "rdbmsSize": {
+    "Type" : "String",
+    "Description" : "RDBMS Size",
+    "Default" : "db.t2.micro"
+  },
+
+  "rdbmsName" : {
+    "Type" : "String",
+    "Description" : "RDBMS Name",
+    "Default" : "projectname"
+  },
+
+  "rdbmsUser" : {
+    "Type" : "String",
+    "Description" : "RDBMS Username",
+    "Default" : "steve"
+  },
+
+  "rdbmsPass" : {
+    "Type" : "String",
+    "Description" : "RDBMS Password",
+    "Default" : "supersecurepassword"
+  },
+
+  "rdbmsDBName" : {
+    "Type" : "String",
+    "Description" : "RDBMS Schema Name",
+    "Default" : "projectname"
+  },
+
+  "EcsInstanceType" : {
+    "Type" : "String",
+    "Description" : "ECS EC2 instance type",
+    "Default" : "t2.micro",
+    "AllowedValues" : [
+        "t2.micro","t2.small","t2.medium","t2.large","m4.large","m4.xlarge","m4.2xlarge","m4.4xlarge","m4.10xlarge","m3.medium","m3.large","m3.xlarge","m3.2xlarge","c4.large","c4.xlarge","c4.2xlarge","c4.4xlarge","c4.8xlarge","c3.large","c3.xlarge","c3.2xlarge","c3.4xlarge","c3.8xlarge","r3.large","r3.xlarge","r3.2xlarge","r3.4xlarge","r3.8xlarge","i2.xlarge","i2.2xlarge","i2.4xlarge","i2.8xlarge" ],
+    "ConstraintDescription" : "must be a valid EC2 instance type."
+  },
+
+  "KeyName" : {
+    "Type" : "String",
+    "Description" : "Optional - Name of an existing EC2 KeyPair to enable SSH access to the ECS instances",
+    "Default" : "projectname"
+  },
+
+  "AsgMaxSize" : {
+    "Type" : "Number",
+    "Description" : "Maximum size and initial Desired Capacity of ECS Auto Scaling Group",
+    "Default" : "1"
+  },
+
+  "AsgMinSize" : {
+    "Type" : "Number",
+    "Description" : "Minimum size of ECS Auto Scaling Group",
+    "Default" : "1"
+  },
+
+  "EcsPort" : {
+    "Type" : "String",
+    "Description" : "Optional - Security Group port to open on ECS instances - defaults to port 80",
+    "Default" : "80"
+  },
+
+  "ElbPort" : {
+    "Type" : "String",
+    "Description" : "Optional - Security Group port to open on ELB - port 80 will be open by default",
+    "Default" : "80"
+  },
+
+  "ElbProtocol" : {
+    "Type" : "String",
+    "Description" : "Optional - ELB Protocol - defaults to HTTP",
+    "Default" : "HTTP"
+  },
+
+  "ElbHealthCheckTarget" : {
+    "Type" : "String",
+    "Description" : "Optional - Health Check Target for ELB - defaults to HTTP:80/",
+    "Default" : "HTTP:80/elb-status"
+  },
+
+  "SourceCidr" : {
+    "Type" : "String",
+    "Description" : "Optional - CIDR/IP range for EcsPort and ElbPort - defaults to 0.0.0.0/0",
+    "Default" : "0.0.0.0/0"
+  },
+
+  "FacebookClientID" : {
+    "Type" : "String",
+    "Description" : "FACEBOOK_CLIENT_ID",
+    "Default" : "1234"
+  },
+
+  "FacebookClientSecret" : {
+    "Type" : "String",
+    "Description" : "FACEBOOK_CLIENT_SECRET",
+    "Default" : "1234"
+  },
+  "sessionSecret" : {
+    "Type" : "String",
+    "Description" : "SESSION_SECRET",
+    "Default" : "change-me-at-somepoint"
+  },
+  "serviceDesiredCount" : {
+    "Type" : "Number",
+    "Description" : "Desired number of services to have",
+    "Default" : 1
+  },
+  "getSentryEndpoint" : {
+    "Type" : "String",
+    "Description" : "GetSentry endpoint",
+    "Default" : "https://1234@app.getsentry.com/1234"
+  },
+  "GaTrackingId" : {
+    "Type" : "String",
+    "Description" : "Google Analytics tracking ID",
+    "Default" : "UA-12345-1"
+  },
+  "emailNotificationsFromUser" : {
+    "Type" : "String",
+    "Description" : "email from <value>@<s3bucketdomain>",
+    "Default" : "notification"
+  },
+  "emailNotificationsFromName" : {
+    "Type" : "String",
+    "Description" : "email from name",
+    "Default" : "project name Notification"
+  }
+}
