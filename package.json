@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/joshbalfour/cloudformation-extensions/issues"
   },
-  "homepage": "https://github.com/joshbalfour/cloudformation-extensions#readme"
+  "homepage": "https://github.com/joshbalfour/cloudformation-extensions#readme",
+  "dependencies": {
+    "es6-promisify": "^4.1.0"
+  }
 }
