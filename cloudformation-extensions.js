@@ -21,6 +21,7 @@ readJSON(filePath)
 
 	})
 	.then(function([statements, extensions]){
+		console.log(`Loaded ${extensions.length} extensions`);
 		console.log(`Found ${statements.length} cfnex statements to process`);
 
 		return Promise.all(
