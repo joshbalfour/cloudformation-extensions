@@ -4,7 +4,10 @@ const fs = require('fs'),
 
 const { readJSON, readFile } = require('../lib/utils');
 
-function include([filename], { srcFileName }){
+function include(args, { srcFileName }){
+	let aargs = [... args ];
+	let filename = aargs.shift();
+	
 	let fn = path.resolve(srcFileName, '..', filename);
 	console.log(`including JSON/JS file ${fn}`);
 
@@ -17,7 +20,7 @@ function include([filename], { srcFileName }){
 		});
 	} else if (path.extname(fn) == '.js') {
 		let file = promisify(new require(fn));
-		return file().then(function(output){
+		return file(aargs).then(function(output){
 			return {
 				output: output,
 				contextChanges: { srcFileName: fn }

@@ -1,4 +1,4 @@
-module.exports = function(cb){
+module.exports = function(args, cb){
 	
 	// BOB - make sure this file is kept up to date with the latest 
 	// ECS AMI IDs.
