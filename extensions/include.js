@@ -19,13 +19,25 @@ function include(args, { srcFileName }){
 			};
 		});
 	} else if (path.extname(fn) == '.js') {
-		let file = promisify(new require(fn));
-		return file(aargs).then(function(output){
-			return {
-				output: output,
-				contextChanges: { srcFileName: fn }
-			};
-		});
+		let js = new require(fn);
+
+		if (typeof js === 'function'){
+			let file = promisify(js);
+			return file(aargs).then(function(output){
+				return {
+					output: output,
+					contextChanges: { srcFileName: fn }
+				};
+			});
+		} else {
+			return new Promise(function(fulfill, reject){
+				fulfill({
+					output: js,
+					contextChanges: { srcFileName: fn }
+				});
+			});
+		}
+
 	} else {
 		throw new Error("Include can only be used for JSON files and JS files which module.export an object");
 	}
