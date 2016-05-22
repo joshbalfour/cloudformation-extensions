@@ -19,9 +19,9 @@ Promise.all([
 		console.log(`Loaded ${extensions.length} extensions`);
 
 		return parse({
-				obj: cfn, 
-				context: { srcFileName: filePath, extensions: extensions }
-			}).then(function(){
+			obj: cfn, 
+			context: { srcFileName: filePath, extensions: extensions }
+		}).then(function(){
 			return cfn;
 		});
 	})
