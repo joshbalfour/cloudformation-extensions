@@ -23,15 +23,21 @@ readJSON(filePath)
 	.then(function([statements, extensions]){
 		console.log(`Loaded ${extensions.length} extensions`);
 		console.log(`Found ${statements.length} cfnex statements to process`);
+		
+		let context = {
+			srcFileName: filePath
+		};
 
 		return Promise.all(
-			statements.map( statement => processStatement(statement, extensions) )
+			statements.map( statement => processStatement(statement, extensions, context) )
 		);
 
 	})
-	.then(function(processedStatement){
-		console.log('Processed statements:', processedStatement);
+	.then(function(processedStatements){
+		processedStatements.forEach(function(processedStatement){
+			console.log(processedStatement);
+		});
 	})
 	.catch(function(err){
-		console.error('Error:',err);
+		console.error('Error:', err);
 	});
