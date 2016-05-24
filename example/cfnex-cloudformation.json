@@ -313,10 +313,7 @@
         "KeyName" : { "Ref" : "KeyName" },
         "SecurityGroups" : [ { "Ref" : "EcsSecurityGroup" } ],
         "InstanceMonitoring" : false,
-        "UserData" : { "Fn::Base64" : { "Fn::Join" : ["", [
-            "#!/bin/bash\n",
-            "echo ECS_CLUSTER=", { "Ref": "EcsCluster" }, " >> /etc/ecs/ecs.config"
-          ] ] } }
+        "UserData" : { "Fn::Base64" : { "cfnex::include-file" : [ "./ec2/boot.sh" ] } }
       }
     },
 
