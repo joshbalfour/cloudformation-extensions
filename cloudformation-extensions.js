@@ -26,8 +26,7 @@ Promise.all([
 		});
 	})
 	.then(function(cfn){
-		console.log(cfn);
-		console.log("^w^ Completed!");
+		console.log("Completed.");
 	})
 	.catch(function(err){
 		console.error('Error:', err);
