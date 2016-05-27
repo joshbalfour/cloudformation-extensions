@@ -9,14 +9,26 @@ args.shift();
 args.shift();
 
 let inFilePath = path.resolve('.', args[0]);
-let outFilePath = path.resolve('.', args[1]);
+let outFilePath;
+if (args.length > 1){
+	outFilePath = path.resolve('.', args[1]);
+}
 
-console.log(`Reading in file: ${inFilePath}, to output to ${outFilePath}`);
+let cwd = path.resolve(inFilePath, '..');
+
+console.log(`Reading in file: ${inFilePath}, to output to ${outFilePath || 'stdout'}`);
 
 readJSON(inFilePath)
-	.then(cfnex.parse)
+	.then(function(fileContents){
+		return cfnex.parse(fileContents, { cwd });
+	})
 	.then(function(cfn){
-		return writeFile(outFilePath, cfn);
+		let output = JSON.stringify(cfn, null, 2);
+		if (outFilePath){
+			return writeFile(outFilePath, output);
+		} else {
+			console.log(output);
+		}
 	})
 	.then(function(){
 		console.log("Completed");
