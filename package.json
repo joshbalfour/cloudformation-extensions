@@ -28,9 +28,10 @@
   },
   "homepage": "https://github.com/joshbalfour/cloudformation-extensions#readme",
   "dependencies": {
+    "cli": "^0.11.2",
     "es6-promisify": "^4.1.0"
   },
   "bin": {
-    "cfnex" : "./bin/cfnex"
+    "cfnex": "./bin/cfnex"
   }
 }

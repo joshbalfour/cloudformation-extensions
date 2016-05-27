@@ -1,38 +1,61 @@
 #!/usr/bin/env node
 
+const cli = require('cli');
+
 const cfnex = require('../cloudformation-extensions.js');
 const path = require('path');
 const { readJSON, writeFile } = require('../lib/utils');
 
-let args = [... process.argv];
-args.shift();
-args.shift();
+cli.enable('version', 'status');
 
-let inFilePath = path.resolve('.', args[0]);
-let outFilePath;
-if (args.length > 1){
-	outFilePath = path.resolve('.', args[1]);
-}
+cli.parse({
+	inFilePath: [ 'i', 'Input cfnex JSON file', 'file' ],
+	outFilePath: [ 'o', 'Write to FILE rather than the console', 'dir' ],
+	cwd: [ false, 'Override the working directory (defaults to the input file\'s directory', 'dir' ]
+});
 
-let cwd = path.resolve(inFilePath, '..');
+cli.main(function(args, options) {
+	let logger = this;
 
-console.log(`Reading in file: ${inFilePath}, to output to ${outFilePath || 'stdout'}`);
-
-readJSON(inFilePath)
-	.then(function(fileContents){
-		return cfnex.parse(fileContents, { cwd });
-	})
-	.then(function(cfn){
-		let output = JSON.stringify(cfn, null, 2);
-		if (outFilePath){
-			return writeFile(outFilePath, output);
-		} else {
-			console.log(output);
+	let notNullOptions = 0;
+	for (var i in options){
+		if (options[i]){
+			notNullOptions++;
 		}
-	})
-	.then(function(){
-		console.log("Completed");
-	})
-	.catch(function(err){
-		console.error("Error", err);
-	});
+	}
+
+	if (notNullOptions === 0){
+		logger.error('Please pass some options in.');
+		cli.getUsage();
+		return;
+	}
+
+	let inFilePath = options.inFilePath;
+	
+	let cwd = options.cwd || path.resolve(inFilePath, '..');
+
+	let outFilePath = options.outFilePath;
+	
+	logger.debug(`Reading in file: ${inFilePath}, to output to ${outFilePath || 'stdout'}`);
+
+	readJSON(inFilePath)
+		.then(function(fileContents){
+			return cfnex.parse(fileContents, { cwd, logger });
+		})
+		.then(function(cfn){
+			let output = JSON.stringify(cfn, null, 2);
+			if (outFilePath){
+				return writeFile(outFilePath, output);
+			} else {
+				logger.output(output);
+			}
+		})
+		.then(function(){
+			if (outFilePath){
+				logger.ok("Completed");
+			}
+		})
+		.catch(function(err){
+			logger.error(err);
+		});
+});
