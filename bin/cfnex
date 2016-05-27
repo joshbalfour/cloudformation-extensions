@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+const cfnex = require('../cloudformation-extensions.js');
+const path = require('path');
+const { readJSON, writeFile } = require('../lib/utils');
+
+let args = [... process.argv];
+args.shift();
+args.shift();
+
+let inFilePath = path.resolve('.', args[0]);
+let outFilePath = path.resolve('.', args[1]);
+
+console.log(`Reading in file: ${inFilePath}, to output to ${outFilePath}`);
+
+readJSON(inFilePath)
+	.then(cfnex.parse)
+	.then(function(cfn){
+		return writeFile(outFilePath, cfn);
+	})
+	.then(function(){
+		console.log("Completed");
+	})
+	.catch(function(err){
+		console.error("Error", err);
+	});
