@@ -6,6 +6,8 @@ const cfnex = require('../cloudformation-extensions.js');
 const path = require('path');
 const { readJSON, writeFile } = require('../lib/utils');
 
+cli.setApp('CloudFormation Extensions (cfnex)', '0.0.1');
+
 cli.enable('version', 'status');
 
 cli.parse({
