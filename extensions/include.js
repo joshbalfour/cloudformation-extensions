@@ -4,12 +4,12 @@ const fs = require('fs'),
 
 const { readJSON, readFile } = require('../lib/utils');
 
-function include(args, { cwd }){
+function include(args, { cwd, logger }){
 	let aargs = [... args ];
 	let filename = aargs.shift();
 	
 	let fn = path.resolve(cwd, filename);
-	console.log(`including JSON/JS file ${fn}`);
+	logger.debug(`including JSON/JS file ${fn}`);
 
 	if (path.extname(fn) == '.json'){
 		return readJSON(fn).then(function(output){
