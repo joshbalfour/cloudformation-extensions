@@ -4,36 +4,37 @@ const fs = require('fs'),
 
 const { readJSON, readFile } = require('../lib/utils');
 
-function include(args, { srcFileName }){
+function include(args, { cwd }){
 	let aargs = [... args ];
 	let filename = aargs.shift();
 	
-	let fn = path.resolve(srcFileName, '..', filename);
+	let fn = path.resolve(cwd, filename);
 	console.log(`including JSON/JS file ${fn}`);
 
 	if (path.extname(fn) == '.json'){
 		return readJSON(fn).then(function(output){
+			let cwd = path.resolve(fn, '..');
 			return {
 				output,
-				contextChanges: { srcFileName: fn }
+				contextChanges: { cwd }
 			};
 		});
 	} else if (path.extname(fn) == '.js') {
 		let js = new require(fn);
-
+		let cwd = path.resolve(fn, '..');
 		if (typeof js === 'function'){
 			let file = promisify(js);
 			return file(aargs).then(function(output){
 				return {
 					output: output,
-					contextChanges: { srcFileName: fn }
+					contextChanges: { cwd }
 				};
 			});
 		} else {
 			return new Promise(function(fulfill, reject){
 				fulfill({
 					output: js,
-					contextChanges: { srcFileName: fn }
+					contextChanges: { cwd }
 				});
 			});
 		}

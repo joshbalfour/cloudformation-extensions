@@ -13,11 +13,11 @@ function replaceSubs(str){
 	return str;
 }
 
-function includeFile(args, { srcFileName }){
+function includeFile(args, { cwd }){
 	let aargs = [... args ];
 	let filename = aargs.shift();
 	
-	let fn = path.resolve(srcFileName, '..', filename);
+	let fn = path.resolve(cwd, filename);
 	console.log(`including file ${fn}`);
 
 	return readFile(fn, 'utf-8')
