@@ -37,6 +37,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "jshint": "^2.9.2",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "type-detect": "^2.0.1"
   }
 }
