@@ -3,7 +3,7 @@
 const { readJSON } = require('./lib/utils');
 const { parseStatement, loadExtensions, processStatement, parse } = require('./lib/cfnex');
 
-function parseCfnex(cfn, { cwd, logger }){
+function parseCfnex(cfn, { cwd, logger, config }){
 	
 	if (!logger){
 		logger = {
@@ -18,11 +18,11 @@ function parseCfnex(cfn, { cwd, logger }){
 		};
 	}
 
-	return loadExtensions({logger})
+	return loadExtensions({cwd, logger, config})
 		.then(function(extensions){
 			return parse({
 				obj: cfn, 
-				context: { cwd, extensions, logger }
+				context: { cwd, extensions, logger, config }
 			}).then(function(){
 				return cfn;
 			});
@@ -31,5 +31,5 @@ function parseCfnex(cfn, { cwd, logger }){
 
 
 module.exports = {
-	parse: parseCfnex
+	parseCfnex
 };
