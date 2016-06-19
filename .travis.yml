@@ -5,7 +5,7 @@ services:
 
 install:
   - docker build -t cfnex .
-  - docker run --entrypoint /bin/sh cfnex 'cd /src && npm install'
+  - docker run --entrypoint /bin/sh -w '/src' cfnex 'npm install'
 
 script:
-  - docker run --entrypoint /bin/sh cfnex 'cd /src && npm test'
+  - docker run --entrypoint /bin/sh -w '/src' cfnex 'npm test'
