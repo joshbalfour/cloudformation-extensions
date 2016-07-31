@@ -7,7 +7,7 @@
     "example": "example"
   },
   "scripts": {
-    "test": "./node_modules/jshint/bin/jshint --exclude ./node_modules . && ./node_modules/mocha/bin/mocha test/*"
+    "test": "./node_modules/jshint/bin/jshint . && ./node_modules/mocha/bin/mocha test/*"
   },
   "repository": {
     "type": "git",
