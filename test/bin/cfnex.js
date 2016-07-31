@@ -16,7 +16,7 @@ describe('Cloudformation Extensions.cfnex executable', function(){
 		// cfnex();
 	});
 
-	it('should error property with no arguments', function(){
+	it('should error properly with no arguments', function(){
 		// cfnex();
 	});
 

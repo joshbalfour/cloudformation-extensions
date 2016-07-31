@@ -1,32 +1,25 @@
-const assert = require('chai').assert;
+const chai = require('chai');
+const chaiAsPromised = require("chai-as-promised");
+chai.use(chaiAsPromised);
+const assert = chai.assert;
+
+const path = require('path');
 
 describe('Cloudformation Extensions.extensions.include-file', function(){
 	
-	let includeFile;
+	const includeFile = require('../../extensions/include-file');
 
-	it('should init fine', function(){
-		includeFile = require('../../extensions/include-file');
-	});
-
-	it('should be a function', function(){
-		assert.isDefined(includeFile);
-		assert.typeOf(includeFile, 'Function', 'is a function');
-	});
-
-	it('should return a promise or be promisifyable', function(){
-		
-	});
-
-	it('shouldn\'t log anything to console but should use the logger', function(){
-		
-	});
+	const logger = {
+		debug: console.log,
+		error: console.log
+	};
 
 	it('should include a file which exists', function(){
-		
+		assert.isFulfilled(includeFile(['include.json'], {cwd: path.resolve('data'), logger: logger}));
 	});
 
 	it('should error properly when trying to include a file that doesn\'t exist', function(){
-		
+		assert.isRejected(includeFile(['doesnotexist.json'], {cwd: path.resolve('data'), logger: logger}));
 	});
 
 });
