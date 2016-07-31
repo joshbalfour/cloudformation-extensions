@@ -5,8 +5,6 @@ services:
 
 install:
   - docker build -t cfnex .
-  - mkdir testing-tmp
-  - docker run --entrypoint="/bin/sh" -w '/src' cfnex -c 'ls -lah'
   - docker run --entrypoint="/bin/sh" -w '/src' cfnex -c 'npm install'
 
 script:
