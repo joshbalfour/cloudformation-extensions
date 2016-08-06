@@ -64,6 +64,7 @@ cli.main(function(args, options) {
 			}
 		})
 		.catch(function(err){
+			logger.error('Failed to process file.');
 			logger.error(err);
 			logger.debug(err.stack || '');
 		});

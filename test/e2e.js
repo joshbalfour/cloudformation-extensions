@@ -33,5 +33,18 @@ describe('Cloudformation Extensions E2E process', function(){
 			});
 		});
 	});
+
+	it('should error nicely if passed an invalid file', (done) => {
+		const inFile = './test/e2e/badInput.json';
+		const outFile = './test/e2e/output.json';
+		const command = `./bin/cfnex -i ${inFile} -o ${outFile} -k`;
+
+		exec(command, (error, stderr, stdout) => {
+			assert.isNull(error);
+			assert.notEqual(stdout, '');
+			assert.include(stdout, 'Failed to process file');
+			done();
+		});
+	});
 	
 });
