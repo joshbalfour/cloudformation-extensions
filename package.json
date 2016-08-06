@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js .",
     "tests": "./node_modules/mocha/bin/mocha test  --recursive",
-    "coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- test --recursive --ui bdd -R spec -t 5000",
+    "coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- test --recursive",
     "test": "npm run lint && npm run tests && npm run coverage"
   },
   "repository": {
