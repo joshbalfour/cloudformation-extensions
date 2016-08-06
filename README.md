@@ -1,4 +1,7 @@
 # cloudformation-extensions
+
+[![Build Status](https://travis-ci.com/joshbalfour/cloudformation-extensions.svg?token=MNpwzj1DWBzELMwhWybL&branch=master)](https://travis-ci.com/joshbalfour/cloudformation-extensions)
+
 Extensions to Amazon CloudFormation
 
 ## Dev Environment

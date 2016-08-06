@@ -40,7 +40,10 @@ function include(args, { cwd, logger }){
 		}
 
 	} else {
-		throw new Error("Include can only be used for JSON files and JS files which module.export an object");
+		return new Promise(function(fulfill, reject){
+			const err = new Error("Include can only be used for JSON files and JS files which module.export an object");
+			reject(err);
+		});
 	}
 }
 
