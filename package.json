@@ -7,7 +7,10 @@
     "example": "example"
   },
   "scripts": {
-    "test": "./node_modules/jshint/bin/jshint . && ./node_modules/mocha/bin/mocha test/*"
+    "lint": "./node_modules/jshint/bin/jshint",
+    "tests": "./node_modules/mocha/bin/mocha test/*",
+    "coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --ui bdd -R spec -t 5000",
+    "test": "npm run lint && npm run tests && npm run coverage"
   },
   "repository": {
     "type": "git",
@@ -37,6 +40,7 @@
   "devDependencies": {
     "chai": "3.5.0",
     "chai-as-promised": "5.3.0",
+    "istanbul": "0.4.4",
     "jshint": "2.9.2",
     "mocha": "2.5.3",
     "type-detect": "2.0.1"
