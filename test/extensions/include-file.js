@@ -22,4 +22,10 @@ describe('Cloudformation Extensions.extensions.include-file', function(){
 		assert.isRejected(includeFile(['doesnotexist.json'], {cwd: path.resolve('data'), logger: logger}));
 	});
 
+	it('should replace substitution strings where appropriate', function(){
+		const result = includeFile(['substring.txt'], {cwd: path.resolve('data'), logger: logger});
+		assert.isFulfilled(result);
+		assert.eventually.equal(result, 'fdsfsd');
+	});
+
 });

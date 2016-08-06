@@ -8,8 +8,8 @@
   },
   "scripts": {
     "lint": "./node_modules/jshint/bin/jshint",
-    "tests": "./node_modules/mocha/bin/mocha test/*",
-    "coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --ui bdd -R spec -t 5000",
+    "tests": "./node_modules/mocha/bin/mocha test  --recursive",
+    "coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- test --recursive --ui bdd -R spec -t 5000",
     "test": "npm run lint && npm run tests && npm run coverage"
   },
   "repository": {
