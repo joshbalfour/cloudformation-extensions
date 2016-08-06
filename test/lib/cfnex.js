@@ -8,8 +8,8 @@ describe('Cloudformation Extensions.cfnex', function(){
 	let cfnex;
 
 	const logger = {
-		debug: console.log,
-		error: console.log
+		debug: () => {},
+		error: () => {},
 	};
 
 	it('should init fine', function(){
@@ -49,21 +49,66 @@ describe('Cloudformation Extensions.cfnex', function(){
 		});
 	});
 
-	describe('parse', function(){
+	describe('parse', () => {
 		it('should parse the given object', function(){
-
+			const context = {
+				logger: logger,
+				cwd: '.',
+				config: {
+					extensionsDirectory: "extensions"
+				}
+			};
+			const obj = {};
+			const parent = {};
+			const pKey = 'testing';
+			parent[pKey] = obj;
+			const args = {
+				obj,
+				parent,
+				pKey,
+				context
+			};
+			assert.isFulfilled(cfnex.parse(args));
 		});
 		it('should error if given an unparsable object', function(){
-			
+			const context = {
+				logger: logger,
+				cwd: '.',
+				config: {
+					extensionsDirectory: "extensions"
+				}
+			};
+			const obj = {};
+			const parent = {};
+			const pKey = '';
+			parent['testing'] = obj;
+			const args = {
+				obj,
+				parent,
+				pKey,
+				context
+			};
+			assert.isRejected(cfnex.parse(args));
 		});
 	});
 
 	describe('parseStatement', function(){
 		it('should parse the given statement', function(){
-
+			const statement = { 'cfnex::anExtension': ['thing1', 'thing2'] };
+			const result = cfnex.parseStatement(statement);
+			const expected = {
+				extensionName: 'anExtension',
+				args: ['thing1', 'thing2']
+			};
+			assert.deepEqual(result, expected);
 		});
 		it('should error if given an unparsable statement', function(){
-			
+			const statement = { 'cfnexfljfanExtension': ['thing1', 'thing2'] };
+			try {
+				cfnex.parseStatement(statement);
+			} catch (e) {
+				assert(e);
+			}
 		});
 	});
 
