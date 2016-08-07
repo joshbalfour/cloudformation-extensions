@@ -1,6 +1,6 @@
 {
   "name": "cloudformation-extensions",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Extensions to Amazon CloudFormation",
   "main": "index.js",
   "directories": {
