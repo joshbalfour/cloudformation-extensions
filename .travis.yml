@@ -8,3 +8,6 @@ install:
 
 script:
   - docker run --entrypoint="/bin/sh" -w '/src' cfnex -c 'npm install && npm test'
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
