@@ -32,7 +32,7 @@ function include(args, { cwd, logger }) {
 				}
 			))
 		} else {
-			ret = new Promise((fulfill) => {
+			ret = new Promise(fulfill => {
 				fulfill({
 					output: js,
 					contextChanges: { cwd: newCwd },
