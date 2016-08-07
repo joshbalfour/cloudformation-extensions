@@ -1,1 +1,1 @@
-module.exports = require('./cloudformation-extensions.js');
+module.exports = require('./cloudformation-extensions')

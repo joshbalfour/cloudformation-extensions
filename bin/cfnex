@@ -1,71 +1,71 @@
 #!/usr/bin/env node
 
-const cli = require('cli');
+const cli = require('cli')
 
-const cfnex = require('../cloudformation-extensions.js');
-const path = require('path');
-const { readJSON, writeFile, readConfig } = require('../lib/utils');
+const cfnex = require('../cloudformation-extensions')
+const path = require('path')
+const { readJSON, writeFile, readConfig } = require('../lib/utils')
 
-cli.setApp('CloudFormation Extensions (cfnex)', '0.0.1');
+cli.setApp('CloudFormation Extensions (cfnex)', '0.0.1')
 
-cli.enable('version', 'status');
+cli.enable('version', 'status')
 
 cli.parse({
-	inFilePath: [ 'i', 'Input cfnex JSON file', 'file' ],
-	outFilePath: [ 'o', 'Write to FILE rather than the console', 'dir' ],
-	cwd: [ false, 'Override the working directory (defaults to the input file\'s directory', 'dir' ]
-});
+	inFilePath: ['i', 'Input cfnex JSON file', 'file'],
+	outFilePath: ['o', 'Write to FILE rather than the console', 'dir'],
+	cwd: [false, 'Override the working directory (defaults to the input file\'s directory', 'dir'],
+})
 
-cli.main(function(args, options) {
-	let logger = this;
+cli.main((args, options) => {
+	const logger = cli
 
-	let notNullOptions = 0;
-	for (var i in options){
-		if (options[i]){
-			notNullOptions++;
-		}
+	const notNullOptions = Object.keys(options).filter(option => option).length
+
+	if (notNullOptions === 0) {
+		logger.error('Please pass some options in.')
+		cli.getUsage()
+
+		return
 	}
 
-	if (notNullOptions === 0){
-		logger.error('Please pass some options in.');
-		cli.getUsage();
-		return;
-	}
+	const inFilePath = options.inFilePath
 
-	let inFilePath = options.inFilePath;
-	
-	let cwd = options.cwd || path.resolve(inFilePath, '..');
+	const cwd = options.cwd || path.resolve(inFilePath, '..')
 
-	let outFilePath = options.outFilePath;
-	
-	logger.debug(`Reading in file: ${inFilePath}, to output to ${outFilePath || 'stdout'}`);
+	const outFilePath = options.outFilePath
 
-	let context = { cwd, logger };
-	
+	logger.debug(`Reading in file: ${inFilePath}, to output to ${outFilePath || 'stdout'}`)
+
+	const context = { cwd, logger }
+
 	Promise.all([
-			readJSON(inFilePath), 
-			readConfig(context)
-		])
-		.then(function([fileContents, config]){
-			context.config = config;
-			return cfnex.parseCfnex(fileContents, context);
-		})
-		.then(function(cfn){
-			let output = JSON.stringify(cfn, null, 2);
-			if (outFilePath){
-				return writeFile(outFilePath, output);
-			} else {
-				logger.output(output);
-			}
-		})
-		.then(function(){
-			if (outFilePath){
-				logger.ok("Completed");
-			}
-		})
-		.catch(function(err){
-			logger.error('Failed to process file.');
-			logger.error(err);
-			logger.debug(err.stack || '');
-		});
-});
+		readJSON(inFilePath),
+		readConfig(context),
+	])
+	.then(([fileContents, config]) => {
+		context.config = config
+
+		return cfnex.parseCfnex(fileContents, context)
+	})
+	.then(cfn => {
+		const output = JSON.stringify(cfn, null, 2)
+		let ret
+		if (!outFilePath) {
+			logger.output(output)
+		} else {
+			ret = writeFile(outFilePath, output)
+		}
+
+		return ret
+	})
+	.then(() => {
+		if (outFilePath) {
+			logger.ok('Completed')
+		}
+	})
+	.catch(err => {
+		logger.error('Failed to process file.')
+		logger.error(err)
+		logger.debug(err.stack || '')
+	})
+})
