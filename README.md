@@ -17,18 +17,62 @@ CloudFormation Extensions is, as the name suggests, incredibly extensible. Writi
 In short, not that much. But that's the idea.
 Cfnex templates add an extra object format to vanilla CloudFormation templates. The format is much like you'll be used to from calling the [Intrinsic Functions](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html) AWS provide you with when writing cfn templates.
 The format is like so:
+
 `{ "cfnex::extensionName" : [ "aString", {"anObject": "argument2"}, 42 ] }`
-Where `extensionName` is the name of the extension, and the array is the arguments sent to that extension.
+
+Where `extensionName` is the name of the extension, and the array is the arguments your want to pass to that extension.
 
 
 ## Built in extensions to cfnex
 Out of the box cfnex comes with two extensions:
 
-    * `include`
-    * `includeFile`
+* `include`
+* `includeFile`
 
 `include` allows you to include another JSON or JS file, and `includeFile` allows you to include a raw file.
 
+The output of an extension is then parsed as cfnex template, so you can do things recursively.
+![We must go deeper](http://i0.kym-cdn.com/photos/images/facebook/000/531/557/a88.jpg)
+
+## Writing your own
+
+You can write your own extensions by having an `extensions` directory, and within it your custom extensions, where the name of the extension is the filename, so if I wanted to refer to my extension as
+
+`{ "cfnex::includeYaml" : [ "myfile.yml" ] }`
+
+My `extensions` directory would look like this:
+
+```
+extensions
+    - includeYaml.js
+```
+
+A cfnex extension is a function which returns a `Promise` which resolves to be an object.
+The function to be ran must be `module.export`ed from the file.
+The function will be called with two parameters: `args` and `context`.
+`args` is whatever the extension was passed in the cfnex template file, so for our `includeYaml` extension it'd be 
+
+```
+[ "myfile.yml" ]
+```
+
+`context` is an object which contains two properties:
+
+* `cwd` - String - the absolute current working directory that you're being ran in
+* `logger` - Object - a logging helper which has `ok`, `error`, `debug`, and `info` properties for you to use instead of plain `console.log` etc.
+
+
+The object you return must have a property called `output` which is the output of your extension which will be 
+the object can optionally have another property called `contextChanges` which should be an object. You can use this to  override the `context` for any cfnex templates your extension returns.
+
+## Configuration
+Your can override where cfnex looks for your extensions by having a `.cfnexrc` JSON file in the directory you run `cfnex` in which looks like this:
+
+```
+{
+    "extensionsDirectory": "customDirName",
+}
+```
 
 ## Getting Started
 
