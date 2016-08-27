@@ -10,18 +10,20 @@ Extensions to Amazon's CloudFormation Template JSON format.
 ### Grab from NPM
 `npm install -g cloudformation-extensions`
 
-`cfnex {args}`
+`cfnex -i {inFile} -o {outFile}`
 
 ### Using the Docker Container
 
-`docker run joshbalfour/cfnex {args}`
+`docker run -v .:/cfnex joshbalfour/cfnex -i /cfnex/{inFile} -o /cfnex/{outFile}`
+
+(mapping the current directory to /cfnex in the container)
 
 ## Description
 This is designed to make using Amazon's CloudFormation template format easier, more understandable, and more maintainable.
 CloudFormation templates are incredibly powerful, but quickly become complicated, and you end up with multiple thousands of lines of JSON which isn't very practical.
 Writing CloudFormation templates using cfnex retains the power of vanilla CloudFormation templates whilst increasing readability and maintainability.
 
-CloudFormation Extensions is, as the name suggests, incredibly extensible. Writing a cfnex extension is as easy as creating a function which takes an object and returns a promise. You can find examples of this in {directory} and a tutorial {here}.
+Writing a cfnex extension is as easy as creating a function which takes an object and returns a promise. You can find examples of this in [the extensions folder](extensions) and a tutorial [below](#writing-your-own-extensions).
 
 
 ## Writing Cfnex Templates
@@ -40,31 +42,6 @@ Out of the box cfnex comes with two extensions:
 
 The output of an extension is then parsed as cfnex template, so you can do things recursively.
 
-
-## CLI Usage
-```
-Usage:
-  CloudFormation Extensions (cfnex) [OPTIONS] [ARGS]
-
-Options: 
-  -i, --inFilePath FILE  Input cfnex JSON file
-  -o, --outFilePath DIR  Write to FILE rather than the console
-      --cwd DIR          Override the working directory (defaults to the input file's directory)
-  -k, --no-color         Omit color from output
-      --debug            Show debug information
-  -v, --version          Display the current version
-  -h, --help             Display help and usage details
- ```
-
-
-## Configuration
-Your can override where cfnex looks for your extensions by having a `.cfnexrc` JSON file in the directory you run `cfnex` in which looks like this:
-
-```
-{
-    "extensionsDirectory": "customDirName",
-}
-```
 
 ## Built-in Extensions
 
@@ -167,6 +144,16 @@ echo ECS_CLUSTER=<%cfnex { "Ref": "EcsCluster" } cfnex%>  >> /etc/ecs/ecs.config
 
 Note the usage of `<%cfnex` tags in the included file, these can be used to include JSON in the included file.
 
+
+## Configuration
+Your can override where cfnex looks for your extensions by having a `.cfnexrc` JSON file in the directory you run `cfnex` in which looks like this:
+
+```
+{
+    "extensionsDirectory": "customDirName",
+}
+```
+
 ## Writing your own extensions
 
 You can write your own extensions by having an `extensions` directory, and within it your custom extensions, where the name of the extension is the filename, so if I wanted to refer to my extension as
@@ -198,5 +185,19 @@ The function will be called with two parameters: `args` and `context`.
 The object you return must have a property called `output` which is the output of your extension which will be 
 the object can optionally have another property called `contextChanges` which should be an object. You can use this to  override the `context` for any cfnex templates your extension returns.
 
+## CLI Usage
+```
+Usage:
+  CloudFormation Extensions (cfnex) [OPTIONS] [ARGS]
 
-[License](License)
+Options: 
+  -i, --inFilePath FILE  Input cfnex JSON file
+  -o, --outFilePath DIR  Write to FILE rather than the console
+      --cwd DIR          Override the working directory (defaults to the input file's directory)
+  -k, --no-color         Omit color from output
+      --debug            Show debug information
+  -v, --version          Display the current version
+  -h, --help             Display help and usage details
+ ```
+
+[License](LICENSE)
