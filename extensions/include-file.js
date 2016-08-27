@@ -22,7 +22,7 @@ function includeFile(args, { cwd, logger }) {
 	logger.debug(`including file ${fn}`)
 
 	return readFile(fn, 'utf-8')
-		.then((fileContents) => {
+		.then(fileContents => {
 			const split = fileContents.split('\n').map(replaceSubs)
 			const output = { 'Fn::Join': ['\n', split] }
 
