@@ -5,7 +5,10 @@ services:
 install:
 - docker build -t cfnex .
 script:
-- docker run --entrypoint="/bin/sh" -w '/src' cfnex -c 'apk add git && npm install -g codecov && npm install && npm test && codecov'
+- mkdir shared
+- docker run -v "$PWD/shared:/shared" --entrypoint="/bin/sh" -w '/src' cfnex -c 'npm install && npm test && cp coverage shared'
+- cd shared
+- bash <(curl -s https://codecov.io/bash)
 deploy:
   provider: npm
   email: josh@joshbalfour.co.uk
