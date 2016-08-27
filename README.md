@@ -7,16 +7,16 @@ Extensions to Amazon's CloudFormation Template JSON format.
 
 ## Installation
 
-### Grab from NPM
-`npm install -g cloudformation-extensions`
-
-`cfnex -i {inFile} -o {outFile}`
-
-### Using the Docker Container
+### Use the Docker Container (recommended)
 
 `docker run -v .:/cfnex joshbalfour/cfnex -i /cfnex/{inFile} -o /cfnex/{outFile}`
 
 (mapping the current directory to /cfnex in the container)
+
+### or grab from NPM
+`npm install -g cloudformation-extensions`
+
+`cfnex -i {inFile} -o {outFile}`
 
 ## Description
 This is designed to make using Amazon's CloudFormation template format easier, more understandable, and more maintainable.
