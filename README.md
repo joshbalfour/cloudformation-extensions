@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.com/joshbalfour/cloudformation-extensions.svg?token=MNpwzj1DWBzELMwhWybL&branch=master)](https://travis-ci.com/joshbalfour/cloudformation-extensions)
 [![Docker Automated build](https://img.shields.io/docker/automated/joshbalfour/cfnex.svg?maxAge=2592000)]()
+[![Docker Pulls](https://img.shields.io/docker/pulls/joshbalfour/cfnex.svg?maxAge=2592000)]()
 [![npm](https://img.shields.io/npm/dm/cloudformation-extensions.svg?maxAge=2592000)]()
 
 Extensions to Amazon's CloudFormation Template JSON format.
