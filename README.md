@@ -9,6 +9,14 @@
 Extensions to Amazon's CloudFormation Template JSON format.
 
 
+## Description
+This is designed to make using Amazon's CloudFormation template format easier, more understandable, and more maintainable.
+CloudFormation templates are incredibly powerful, but quickly become complicated, and you end up with multiple thousands of lines of JSON which isn't very practical.
+Writing CloudFormation templates using cfnex retains the power of vanilla CloudFormation templates whilst increasing readability and maintainability.
+
+Writing a cfnex extension is as easy as creating a function which takes an object and returns a promise. You can find examples of this in [the extensions folder](extensions) and a tutorial [below](#writing-your-own-extensions).
+
+
 ## Installation
 
 ### Use the Docker Container (recommended)
@@ -21,14 +29,6 @@ Extensions to Amazon's CloudFormation Template JSON format.
 `npm install -g cloudformation-extensions`
 
 `cfnex -i {inFile} -o {outFile}`
-
-## Description
-This is designed to make using Amazon's CloudFormation template format easier, more understandable, and more maintainable.
-CloudFormation templates are incredibly powerful, but quickly become complicated, and you end up with multiple thousands of lines of JSON which isn't very practical.
-Writing CloudFormation templates using cfnex retains the power of vanilla CloudFormation templates whilst increasing readability and maintainability.
-
-Writing a cfnex extension is as easy as creating a function which takes an object and returns a promise. You can find examples of this in [the extensions folder](extensions) and a tutorial [below](#writing-your-own-extensions).
-
 
 ## Writing Cfnex Templates
 You write cfnex templates the same way you would regular CloudFormation templates, but with the ability to call cfnex extensions the same way you would "[Intrinsic Functions](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html)" ( `Fn::GetAtt`, `Fn::Join`, etc. ), like so:
