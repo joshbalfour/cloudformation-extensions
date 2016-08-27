@@ -2,9 +2,8 @@ sudo: required
 
 services:
   - docker
-
 install:
   - docker build -t cfnex .
 
 script:
-  - docker run --entrypoint="/bin/sh" -w '/src' cfnex -c 'npm install && npm install -g codecov && npm test && codecov'
+  - docker run --entrypoint="/bin/sh" -w '/src' cfnex -c 'npm install && npm test'
