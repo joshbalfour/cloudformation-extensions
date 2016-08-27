@@ -1,10 +1,14 @@
 sudo: required
+language: generic
 services:
 - docker
 install:
 - docker build -t cfnex .
 script:
-- docker run --entrypoint="/bin/sh" -w '/src' cfnex -c 'npm install && npm test'
+- mkdir shared
+- docker run -v "$PWD/shared:/shared" --entrypoint="/bin/sh" -w '/src' cfnex -c 'npm install && npm test && cp -r coverage /shared'
+- cd shared
+- bash <(curl -s https://codecov.io/bash)
 deploy:
   provider: npm
   email: josh@joshbalfour.co.uk
