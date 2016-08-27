@@ -1,10 +1,15 @@
 sudo: required
-
 services:
-  - docker
-
+- docker
 install:
-  - docker build -t cfnex .
-
+- docker build -t cfnex .
 script:
-  - docker run --entrypoint="/bin/sh" -w '/src' cfnex -c 'npm install && npm test'
+- docker run --entrypoint="/bin/sh" -w '/src' cfnex -c 'npm install && npm test'
+deploy:
+  provider: npm
+  email: josh@joshbalfour.co.uk
+  api_key:
+    secure: JQ/YlkmNWWkDZEefmOtzU0aKJTpZLth+LmWuQUReut1fiJvzDyvDLAMhN5gVer+ty49f381JDfxYU7INEAJuc9pmunUolnVppDNUhPRbUx44n1Owv0wejUWXTvWF6k6L4SKd70sTEvtHYzBpuwjbDikZ372HpIpUZXACRyoE9QwLbguKgWjGvfFXgiTdw9thArGeg6vuSMNcGLZ9rfkG3QQ6P4uteSjyRXjefGfhUV3FSwl+WiPGIujw6FPHgNRqmogjhmUX3PnV74bKr8iG3s/gLamir93xiNmSHrK9lgdeLGywHrJMJrQjsGjgAP4UV5vQbWxwFg1fT09TQCVwyb7vvvCutu7WFUvsKaF0C2be81JByFrG/110JC1J0APNwNBIs+3e9iAjxxzMt3Qpuswz9nhPIu7TzepL9RXBU/PUoitPoGjTjp1rCxRiu7MfJa4qkFvlGolaBwfi+LIzCzxWxeo/DiDmajIyXNZfZJebo7YqRRl1ArJ2iT8GfG2x3nSpW5CImhAz/Nhipt1zkcGKfGz19/74E5GWViXmpN7zW/UCuite2UHq40CcqVPch9rMCfPQJjMks9fYQjUsuFTjZDkJAJw3sLQUaML52iBfn8yylU7UOAubgtDf6lqT9a18hjrGLmp077pDtxspsc6Cie+D81fPTmvVKtKdbMg=
+  on:
+    branch: master
+    repo: joshbalfour/cloudformation-extensions
