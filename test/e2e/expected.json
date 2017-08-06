@@ -734,7 +734,9 @@
                     "",
                     [
                       "echo ECS_CLUSTER=",
-                      " { \"Ref\": \"EcsCluster\" } ",
+                      {
+                        "Ref": "EcsCluster"
+                      },
                       "  >> /etc/ecs/ecs.config"
                     ]
                   ]
